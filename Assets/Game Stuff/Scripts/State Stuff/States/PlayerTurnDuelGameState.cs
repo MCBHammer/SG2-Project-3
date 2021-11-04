@@ -16,11 +16,35 @@ public class PlayerTurnDuelGameState : DuelGameState
 
         _playerTurnCount++;
         _playerTurnTextUI.text = "Player Turn: " + _playerTurnCount.ToString();
+        StateMachine.Input.PressedAttack += OnAttack;
+        StateMachine.Input.PressedCharge += OnCharge;
+        StateMachine.Input.PressedShield += OnShield;
     }
 
     public override void Exit()
     {
         _playerTurnTextUI.gameObject.SetActive(false);
         Debug.Log("Exiting Player Turn");
+        StateMachine.Input.PressedAttack -= OnAttack;
+        StateMachine.Input.PressedCharge -= OnCharge;
+        StateMachine.Input.PressedShield -= OnShield;
+    }
+
+    void OnAttack()
+    {
+        Debug.Log("Attack!");
+        StateMachine.ChangeState<EnemyTurnDuelGameState>();
+    }
+
+    void OnCharge()
+    {
+        Debug.Log("Charge");
+        StateMachine.ChangeState<EnemyTurnDuelGameState>();
+    }
+
+    void OnShield()
+    {
+        Debug.Log("Shield");
+        StateMachine.ChangeState<EnemyTurnDuelGameState>();
     }
 }
