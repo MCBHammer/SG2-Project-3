@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class EnemyTurnDuelGameState : DuelGameState
 {
+    [SerializeField] Text _stateTextUI = null;
+
     public static event Action EnemyTurnBegan;
     public static event Action EnemyTurnEnded;
 
@@ -15,6 +18,7 @@ public class EnemyTurnDuelGameState : DuelGameState
         Debug.Log("Entering Enemy Turn");
         EnemyTurnBegan?.Invoke();
 
+        _stateTextUI.text = ("State: Enemy Turn State");
         StartCoroutine(EnemyThinkingRoutine(_pauseDuration));
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerTurnDuelGameState : DuelGameState
 {
     [SerializeField] Text _playerTurnTextUI = null;
+    [SerializeField] Text _stateTextUI = null;
 
     int _playerTurnCount = 0;
 
@@ -13,6 +14,8 @@ public class PlayerTurnDuelGameState : DuelGameState
     {
         Debug.Log("Entering Player Turn");
         _playerTurnTextUI.gameObject.SetActive(true);
+
+        _stateTextUI.text = ("State: Player Turn State");
 
         _playerTurnCount++;
         _playerTurnTextUI.text = "Player Turn: " + _playerTurnCount.ToString();
@@ -33,18 +36,39 @@ public class PlayerTurnDuelGameState : DuelGameState
     void OnAttack()
     {
         Debug.Log("Attack!");
-        StateMachine.ChangeState<EnemyTurnDuelGameState>();
+        if(_playerTurnCount < 3)
+        {
+            StateMachine.ChangeState<WinDuelGameState>();
+        } else
+        {
+            StateMachine.ChangeState<LoseDuelGameState>();
+        }
+        
     }
 
     void OnCharge()
     {
         Debug.Log("Charge");
-        StateMachine.ChangeState<EnemyTurnDuelGameState>();
+        if (_playerTurnCount < 3)
+        {
+            StateMachine.ChangeState<EnemyTurnDuelGameState>();
+        }
+        else
+        {
+            StateMachine.ChangeState<LoseDuelGameState>();
+        }
     }
 
     void OnShield()
     {
         Debug.Log("Shield");
-        StateMachine.ChangeState<EnemyTurnDuelGameState>();
+        if (_playerTurnCount < 3)
+        {
+            StateMachine.ChangeState<EnemyTurnDuelGameState>();
+        }
+        else
+        {
+            StateMachine.ChangeState<LoseDuelGameState>();
+        }
     }
 }
