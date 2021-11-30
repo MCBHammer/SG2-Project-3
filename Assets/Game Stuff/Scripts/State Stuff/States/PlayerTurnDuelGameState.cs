@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using PlayerDeterminer;
 
 public class PlayerTurnDuelGameState : DuelGameState
 {
@@ -9,6 +10,8 @@ public class PlayerTurnDuelGameState : DuelGameState
     [SerializeField] Text _stateTextUI = null;
 
     int _playerTurnCount = 0;
+
+    CommandStack _commandStack = new CommandStack();
 
     public override void Enter()
     {
@@ -36,6 +39,8 @@ public class PlayerTurnDuelGameState : DuelGameState
     void OnAttack()
     {
         Debug.Log("Attack!");
+        _commandStack.ExecuteCommand(new Attack(PlayerType.PLAYER));
+        /*
         if(_playerTurnCount < 3)
         {
             StateMachine.ChangeState<WinDuelGameState>();
@@ -43,12 +48,14 @@ public class PlayerTurnDuelGameState : DuelGameState
         {
             StateMachine.ChangeState<LoseDuelGameState>();
         }
-        
+        */  
     }
 
     void OnCharge()
     {
         Debug.Log("Charge");
+        _commandStack.ExecuteCommand(new Charge(PlayerType.PLAYER));
+        /*
         if (_playerTurnCount < 3)
         {
             StateMachine.ChangeState<EnemyTurnDuelGameState>();
@@ -57,11 +64,14 @@ public class PlayerTurnDuelGameState : DuelGameState
         {
             StateMachine.ChangeState<LoseDuelGameState>();
         }
+        */
     }
 
     void OnShield()
     {
         Debug.Log("Shield");
+        _commandStack.ExecuteCommand(new Shield(PlayerType.PLAYER));
+        /*
         if (_playerTurnCount < 3)
         {
             StateMachine.ChangeState<EnemyTurnDuelGameState>();
@@ -70,5 +80,6 @@ public class PlayerTurnDuelGameState : DuelGameState
         {
             StateMachine.ChangeState<LoseDuelGameState>();
         }
+        */
     }
 }
