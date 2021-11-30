@@ -8,7 +8,7 @@ public class PlayerData : MonoBehaviour
     int charges = 0;
     int shields = 0;
 
-    public int PlayerHealth { get { return health; } set { } }
-    public int PlayerCharges { get { return charges; } set { } }
-    public int PlayerShields{ get { return shields; } set { } }
+    public int PlayerHealth { get { return health; } }
+    public int PlayerCharges { get { return charges; } }
+    public int PlayerShields{ get { return shields; } }
 }
