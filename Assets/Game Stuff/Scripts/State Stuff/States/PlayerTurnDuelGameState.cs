@@ -32,7 +32,7 @@ public class PlayerTurnDuelGameState : DuelGameState
     public override void Exit()
     {
         _playerTurnTextUI.gameObject.SetActive(false);
-        _playerData.PlayerShieldCooldown--;
+        _playerData.ShieldCountDown();
         Debug.Log("Exiting Player Turn");
         StateMachine.Input.PressedAttack -= OnAttack;
         StateMachine.Input.PressedCharge -= OnCharge;

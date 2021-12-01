@@ -10,10 +10,10 @@ public class PlayerData : MonoBehaviour
     int shieldCooldown = 0;
     EnemyData _enemyData = null;
 
-    public int PlayerHealth { get { return health; } set { health -= value; } }
+    public int PlayerHealth { get { return health; } }
     public int PlayerCharges { get { return charges; } }
-    public int PlayerShields{ get { return shields; } set { shields = value; } }
-    public int PlayerShieldCooldown { get { return shieldCooldown; } set { shieldCooldown -= value; } }
+    public int PlayerShields{ get { return shields; } }
+    public int PlayerShieldCooldown { get { return shieldCooldown; } }
 
     private void Awake()
     {
@@ -40,15 +40,26 @@ public class PlayerData : MonoBehaviour
         if(charges >= 1)
         {
             int damageDealt = charges - _enemyData.EnemyShields;
-            if(damageDealt >= 0)
-            {
-                _enemyData.EnemyHealth -= damageDealt;
-                _enemyData.EnemyShields = 0;
-            } else
-            {
-                _enemyData.EnemyShields += damageDealt;
-            }
+            _enemyData.TakeDamage(damageDealt);
             charges = 0;
+        }
+    }
+
+    public void ShieldCountDown()
+    {
+        shieldCooldown--;
+    }
+
+    public void TakeDamage(int damageDealt)
+    {
+        if (damageDealt >= 0)
+        {
+            health -= damageDealt;
+            shields = 0;
+        }
+        else
+        {
+            shields += damageDealt;
         }
     }
 }

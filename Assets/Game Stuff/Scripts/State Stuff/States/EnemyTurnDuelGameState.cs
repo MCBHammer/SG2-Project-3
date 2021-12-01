@@ -30,7 +30,7 @@ public class EnemyTurnDuelGameState : DuelGameState
     public override void Exit()
     {
         Debug.Log("Exiting Enemy Turn");
-        _enemyData.EnemyShieldCooldown--;
+        _enemyData.ShieldCountDown();
     }
 
     IEnumerator EnemyThinkingRoutine(float pauseDuration)
