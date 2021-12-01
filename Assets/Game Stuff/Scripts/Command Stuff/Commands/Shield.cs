@@ -6,10 +6,14 @@ using PlayerDeterminer;
 public class Shield : ICommand
 {
     PlayerType _type;
+    PlayerData _playerData;
+    EnemyData _enemyData;
 
-    public Shield(PlayerType type)
+    public Shield(PlayerType type, PlayerData playerData, EnemyData enemyData)
     {
         _type = type;
+        _playerData = playerData;
+        _enemyData = enemyData;
     }
 
     public void Execute()
@@ -18,12 +22,12 @@ public class Shield : ICommand
         {
             case PlayerType.PLAYER:
                 Debug.Log("Player Shields");
-                //add shield functionality here
+                _playerData.Shield();
                 break;
 
             case PlayerType.ENEMY:
                 Debug.Log("Enemy Shields");
-                //add shield functionality here
+                _enemyData.Shield();
                 break;
 
             case PlayerType.NULL:

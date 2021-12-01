@@ -7,6 +7,8 @@ using System;
 public class EnemyTurnDuelGameState : DuelGameState
 {
     [SerializeField] Text _stateTextUI = null;
+    [SerializeField] PlayerData _playerData = null;
+    [SerializeField] EnemyData _enemyData = null;
 
     public static event Action EnemyTurnBegan;
     public static event Action EnemyTurnEnded;

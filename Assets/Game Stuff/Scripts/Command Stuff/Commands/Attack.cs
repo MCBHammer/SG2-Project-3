@@ -6,10 +6,14 @@ using PlayerDeterminer;
 public class Attack : ICommand
 {
     PlayerType _type;
+    PlayerData _playerData;
+    EnemyData _enemyData;
 
-    public Attack(PlayerType type)
+    public Attack(PlayerType type, PlayerData playerData, EnemyData enemyData)
     {
         _type = type;
+        _playerData = playerData;
+        _enemyData = enemyData;
     }
 
     public void Execute()
@@ -18,12 +22,12 @@ public class Attack : ICommand
         {
             case PlayerType.PLAYER:
                 Debug.Log("Player Attacks");
-                //add attack functionality here
+                _playerData.Attack();
                 break;
 
             case PlayerType.ENEMY:
                 Debug.Log("Enemy Attack");
-                //add attack functionality here
+                _enemyData.Attack();
                 break;
 
             case PlayerType.NULL:

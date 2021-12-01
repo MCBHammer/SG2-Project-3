@@ -6,10 +6,14 @@ using PlayerDeterminer;
 public class Charge : ICommand
 {
     PlayerType _type;
+    PlayerData _playerData;
+    EnemyData _enemyData;
 
-    public Charge(PlayerType type)
+    public Charge(PlayerType type, PlayerData playerData, EnemyData enemyData)
     {
         _type = type;
+        _playerData = playerData;
+        _enemyData = enemyData;
     }
 
     public void Execute()
@@ -18,13 +22,12 @@ public class Charge : ICommand
         {
             case PlayerType.PLAYER:
                 Debug.Log("Player Charges");
-                //PlayerData.
-                //add charge functionality here
+                _playerData.Charge();
                 break;
 
             case PlayerType.ENEMY:
                 Debug.Log("Enemy Charges");
-                //add charge functionality here
+                _enemyData.Charge();
                 break;
 
             case PlayerType.NULL:

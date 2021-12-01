@@ -8,6 +8,8 @@ public class PlayerTurnDuelGameState : DuelGameState
 {
     [SerializeField] Text _playerTurnTextUI = null;
     [SerializeField] Text _stateTextUI = null;
+    [SerializeField] PlayerData _playerData = null;
+    [SerializeField] EnemyData _enemyData = null;
 
     int _playerTurnCount = 0;
 
@@ -30,6 +32,7 @@ public class PlayerTurnDuelGameState : DuelGameState
     public override void Exit()
     {
         _playerTurnTextUI.gameObject.SetActive(false);
+        _playerData.PlayerShieldCooldown--;
         Debug.Log("Exiting Player Turn");
         StateMachine.Input.PressedAttack -= OnAttack;
         StateMachine.Input.PressedCharge -= OnCharge;
@@ -38,48 +41,56 @@ public class PlayerTurnDuelGameState : DuelGameState
 
     void OnAttack()
     {
-        Debug.Log("Attack!");
-        _commandStack.ExecuteCommand(new Attack(PlayerType.PLAYER));
-        /*
-        if(_playerTurnCount < 3)
+        if(_playerData.PlayerCharges >= 1)
         {
-            StateMachine.ChangeState<WinDuelGameState>();
-        } else
-        {
-            StateMachine.ChangeState<LoseDuelGameState>();
+            Debug.Log("Attack!");
+            _commandStack.ExecuteCommand(new Attack(PlayerType.PLAYER, _playerData, _enemyData));
+            if(_enemyData.EnemyHealth <= 0)
+            {
+                StateMachine.ChangeState<WinDuelGameState>();
+            }
+            else
+            {
+                StateMachine.ChangeState<EnemyTurnDuelGameState>();
+            }
         }
-        */  
+        else
+        {
+            //Visual/Audio feedback that charges are empty
+        }
     }
 
     void OnCharge()
     {
-        Debug.Log("Charge");
-        _commandStack.ExecuteCommand(new Charge(PlayerType.PLAYER));
-        /*
-        if (_playerTurnCount < 3)
+        if (_playerData.PlayerCharges < 5)
         {
+            Debug.Log("Charge");
+            _commandStack.ExecuteCommand(new Charge(PlayerType.PLAYER, _playerData, _enemyData));
             StateMachine.ChangeState<EnemyTurnDuelGameState>();
-        }
-        else
+        } else
         {
-            StateMachine.ChangeState<LoseDuelGameState>();
+            //Visual/Audio feedback that charges are full
         }
-        */
     }
 
     void OnShield()
     {
-        Debug.Log("Shield");
-        _commandStack.ExecuteCommand(new Shield(PlayerType.PLAYER));
-        /*
-        if (_playerTurnCount < 3)
+        if(_playerData.PlayerShields < 3)
         {
-            StateMachine.ChangeState<EnemyTurnDuelGameState>();
+            if(_playerData.PlayerShieldCooldown <= 0)
+            {
+                Debug.Log("Shield");
+                _commandStack.ExecuteCommand(new Shield(PlayerType.PLAYER, _playerData, _enemyData));
+                StateMachine.ChangeState<EnemyTurnDuelGameState>();
+            } 
+            else
+            {
+                //Visual/Audio feedback that shield is on cooldown
+            }  
         }
         else
         {
-            StateMachine.ChangeState<LoseDuelGameState>();
-        }
-        */
+            //Visual/Audio feedback that shields are full
+        } 
     }
 }
