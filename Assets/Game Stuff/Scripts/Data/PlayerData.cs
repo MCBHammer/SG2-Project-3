@@ -48,6 +48,7 @@ public class PlayerData : MonoBehaviour
             {
                 _enemyData.EnemyShields += damageDealt;
             }
+            charges = 0;
         }
     }
 }
