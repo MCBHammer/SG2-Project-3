@@ -21,7 +21,7 @@ public class PlayerDataDisplay : MonoBehaviour
 
     void StatsUpdate()
     {
-        if(_playerData.PlayerHealth < 0)
+        if(_playerData.PlayerHealth <= 0)
         {
             _healthImage.sprite = _healthSprites[0];
         } else if (_playerData.PlayerHealth > 5)

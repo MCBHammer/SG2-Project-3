@@ -53,7 +53,6 @@ public class PlayerTurnDuelGameState : DuelGameState
             _commandStack.ExecuteCommand(new Attack(PlayerType.PLAYER, _playerData, _enemyData));
             if(_enemyData.EnemyHealth <= 0)
             {
-                PlayerTurnEnded?.Invoke();
                 StateMachine.ChangeState<WinDuelGameState>();
             }
             else
