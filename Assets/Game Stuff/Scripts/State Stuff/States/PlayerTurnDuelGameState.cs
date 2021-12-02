@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PlayerDeterminer;
+using System;
 
 public class PlayerTurnDuelGameState : DuelGameState
 {
@@ -13,6 +14,9 @@ public class PlayerTurnDuelGameState : DuelGameState
 
     int _playerTurnCount = 0;
 
+    public static event Action PlayerTurnBegan;
+    public static event Action PlayerTurnEnded;
+
     CommandStack _commandStack = new CommandStack();
 
     public override void Enter()
@@ -21,6 +25,7 @@ public class PlayerTurnDuelGameState : DuelGameState
         _playerTurnTextUI.gameObject.SetActive(true);
 
         _stateTextUI.text = ("State: Player Turn State");
+        PlayerTurnBegan?.Invoke();
 
         _playerTurnCount++;
         _playerTurnTextUI.text = "Player Turn: " + _playerTurnCount.ToString();
@@ -33,6 +38,7 @@ public class PlayerTurnDuelGameState : DuelGameState
     {
         _playerTurnTextUI.gameObject.SetActive(false);
         _playerData.ShieldCountDown();
+        PlayerTurnEnded?.Invoke();
         Debug.Log("Exiting Player Turn");
         StateMachine.Input.PressedAttack -= OnAttack;
         StateMachine.Input.PressedCharge -= OnCharge;
@@ -47,6 +53,7 @@ public class PlayerTurnDuelGameState : DuelGameState
             _commandStack.ExecuteCommand(new Attack(PlayerType.PLAYER, _playerData, _enemyData));
             if(_enemyData.EnemyHealth <= 0)
             {
+                PlayerTurnEnded?.Invoke();
                 StateMachine.ChangeState<WinDuelGameState>();
             }
             else
