@@ -22,7 +22,7 @@ public class PlayerTurnDuelGameState : DuelGameState
     public override void Enter()
     {
         Debug.Log("Entering Player Turn");
-        _playerTurnTextUI.gameObject.SetActive(true);
+        //_playerTurnTextUI.gameObject.SetActive(true);
 
         _stateTextUI.text = ("State: Player Turn State");
         PlayerTurnBegan?.Invoke();
@@ -36,7 +36,7 @@ public class PlayerTurnDuelGameState : DuelGameState
 
     public override void Exit()
     {
-        _playerTurnTextUI.gameObject.SetActive(false);
+        //_playerTurnTextUI.gameObject.SetActive(false);
         _playerData.ShieldCountDown();
         PlayerTurnEnded?.Invoke();
         Debug.Log("Exiting Player Turn");

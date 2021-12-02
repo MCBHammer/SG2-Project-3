@@ -17,6 +17,8 @@ public class EnemyDataDisplay : MonoBehaviour
     {
         EnemyTurnDuelGameState.EnemyTurnBegan += StatsUpdate;
         EnemyTurnDuelGameState.EnemyTurnEnded += StatsUpdate;
+        PlayerTurnDuelGameState.PlayerTurnBegan += StatsUpdate;
+        PlayerTurnDuelGameState.PlayerTurnEnded += StatsUpdate;
     }
 
     void StatsUpdate()

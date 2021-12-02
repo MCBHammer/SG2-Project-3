@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuButtons : MonoBehaviour
 {
+    [SerializeField] GameObject _mainPanel = null;
+    [SerializeField] GameObject _rulesPanel = null;
     public void StartGame()
     {
         SceneManager.LoadScene("MainScene");
@@ -13,5 +15,17 @@ public class MainMenuButtons : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenRules()
+    {
+        _mainPanel.SetActive(false);
+        _rulesPanel.SetActive(true);
+    }
+
+    public void CloseRules()
+    {
+        _mainPanel.SetActive(true);
+        _rulesPanel.SetActive(false);
     }
 }

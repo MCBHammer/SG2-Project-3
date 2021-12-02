@@ -26,11 +26,11 @@ public class DuelGameUIController : MonoBehaviour
 
     void OnEnemyTurnBegan()
     {
-        _enemyTurnTextUI.gameObject.SetActive(true);
+        //_enemyTurnTextUI.gameObject.SetActive(true);
     }
 
     void OnEnemyTurnEnded()
     {
-        _enemyTurnTextUI.gameObject.SetActive(false);
+        //_enemyTurnTextUI.gameObject.SetActive(false);
     }
 }

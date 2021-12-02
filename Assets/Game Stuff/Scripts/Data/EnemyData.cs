@@ -10,6 +10,12 @@ public class EnemyData : MonoBehaviour
     int shieldCooldown = 0;
     PlayerData _playerData = null;
 
+    [SerializeField] AudioClip _chargeAudio = null;
+    [SerializeField] AudioClip _shieldAudio = null;
+    [SerializeField] AudioClip _hitAudio = null;
+    [SerializeField] AudioClip _bigHitAudio = null;
+    [SerializeField] AudioClip _blockAudio = null;
+
     public int EnemyHealth { get { return health; } }
     public int EnemyCharges { get { return charges; } }
     public int EnemyShields { get { return shields; } }
@@ -23,7 +29,10 @@ public class EnemyData : MonoBehaviour
     public void Charge()
     {
         if (charges < 5)
+        {
             charges++;
+            AudioHelper.PlayClip2D(_chargeAudio, 0.5f);
+        }
     }
 
     public void Shield()
@@ -32,6 +41,7 @@ public class EnemyData : MonoBehaviour
         {
             shields++;
             shieldCooldown = 2;
+            AudioHelper.PlayClip2D(_shieldAudio, 0.5f);
         }
     }
 
@@ -56,10 +66,20 @@ public class EnemyData : MonoBehaviour
         {
             health -= damageDealt;
             shields = 0;
+            AudioHelper.PlayClip2D(_hitAudio, 0.5f);
+            if (damageDealt > 2)
+            {
+                AudioHelper.PlayClip2D(_bigHitAudio, 0.5f);
+            }
+            if (damageDealt == 0)
+            {
+                AudioHelper.PlayClip2D(_blockAudio, 0.5f);
+            }
         }
         else
         {
             shields += damageDealt;
+            AudioHelper.PlayClip2D(_blockAudio, 0.5f);
         }
     }
 }
